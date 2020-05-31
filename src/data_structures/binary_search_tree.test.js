@@ -104,22 +104,53 @@ dataStructures.forEach(TargetDS => {
 
     describe('delete', () => {
       it('returns the value for the removed record', () => {
-
+        bst.insert('test');
+        expect(bst.delete('test')).toBe('test')
       });
 
       it('returns undefined if the record was not found', () => {
-
+        bst.insert('test');
+        expect(bst.delete('testNotFound')).toBe(undefined);
       });
 
       it('reduces the count by 1', () => {
-
+        expect(bst.count()).toBe(0);
+        bst.insert('one');
+        bst.insert('two')
+        expect(bst.count()).toBe(2);
+        bst.delete('one');
+        expect(bst.count()).toBe(1);
       });
 
       it('omits the removed record from iteration results', () => {
+        bst.insert('alpha');
+        bst.insert('beta');
+        bst.insert('gamma');
+        bst.delete('beta');
 
+        const cb = jest.fn();
+        bst.forEach(cb);
+
+        expect(cb.mock.calls.length).toBe(2);
+        expect(cb.mock.calls[0][0]['key']).toEqual('alpha');
+        expect(cb.mock.calls[1][0]['key']).not.toEqual('beta');
+        expect(cb.mock.calls[1][0]['key']).toEqual('gamma');
       });
 
       it('can remove every element in a tree', () => {
+        const keys = ['cat', 'apple', 'egret', 'bologna', 'domino'];
+        
+        keys.forEach(key => {
+          bst.insert(key);
+        })
+
+        keys.forEach(key => {
+          bst.delete(key);
+        })
+
+        const cb = jest.fn();
+        bst.forEach(cb);
+        expect(cb.mock.calls.length).toBe(0);
 
       });
 
