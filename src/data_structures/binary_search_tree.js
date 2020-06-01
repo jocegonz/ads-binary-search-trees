@@ -72,7 +72,6 @@ class BinarySearchTree {
   }
 
   delete(key) {
-    // TODO (tests first!)
     let node = this.lookup(key);
     if (node) {
       this._count -= 1;
@@ -132,51 +131,6 @@ class BinarySearchTree {
           }
         }
         findAndDelete(this._root, key);
-      // }
-        // let currentNode  = this._root;
-
-    //     while (currentNode) {
-    //       if (key < currentNode.key) {
-    //         if (currentNode.left) {
-    //           currentNode  = currentNode.left;
-    //         } 
-    //         // else {
-    //         //   node.parent = currentNode;
-    //         //   currentNode.left = node;
-    //         //   this._count += 1;
-  
-    //         //   // return currentNode;
-    //         // }
-            
-    //       } else if (key > currentNode.key) {
-    //         if (currentNode.right) {
-    //           currentNode = currentNode.right;
-    //         } 
-    //         // else {
-    //         //   node.parent = currentNode;
-    //         //   currentNode.right = node;
-    //         //   this._count += 1;
-  
-    //           // return currentNode;
-    //         // }
-    //       } else {
-    //         let newParent;
-    //         if (currentNode.left) {
-    //           newParent = currentNode.left;
-    //         } else if (currentNode.right) {
-    //           newParent = currentNode.right
-    //         } 
-    //         else {
-    //           console.log(`@@@ leaf nodes: ${JSON.stringify(currentNode.left)} :::parent ${currentNode.parent}`)
-    //         //   let previousParent = currentNode.parent;
-    //         //   previousParent.left = undefined;
-    //         }
-    //         break;
-    //         // currentNode.value  = value;
-    //           // return currentNode;
-    //       }
-    //     }   
-    //   }
     }
     return node ? key : undefined;
 

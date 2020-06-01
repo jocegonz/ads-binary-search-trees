@@ -159,39 +159,57 @@ dataStructures.forEach(TargetDS => {
         // a tree matching the scenario. How can you use your knowledge
         // of how insert works to do this? How can you check your work?
 
+        beforeEach(() => {
+          let records = ['camel', 'beetle', 'alpaca', 'dragonfly', 'elephant'];
+          
+          records.forEach(record => {
+            bst.insert(record);
+          });
+        });
+
         it('can remove the record with the smallest key', () => {
-          // TODO:
           // Insert several records
           // Remove the record with the smallest key
           // Ensure that looking up that key returns undefined
+          bst.delete('alpaca');
+          expect(bst.lookup('alpaca')).toBe(undefined);
         });
 
         it('can remove the record with the largest key', () => {
-
+          bst.delete('elephant');
+          expect(bst.lookup('elephant')).toBe(undefined);
         });
 
         it('can remove the root', () => {
-
+          bst.delete('camel');
+          expect(bst.lookup('camel')).toBe(undefined);
         });
 
         it('can remove a node with no children', () => {
-
+          bst.delete('alpaca');
+          expect(bst.lookup('alpaca')).toBe(undefined);
         });
 
         it('can remove a node with only a left child', () => {
-
+          bst.delete('beetle');
+          expect(bst.lookup('beetle')).toBe(undefined);
         });
 
         it('can remove a node with only a right child', () => {
-
+          bst.delete('dragonfly');
+          expect(bst.lookup('dragonfly')).toBe(undefined);
         });
 
         it('can remove a node with both children, where the successor is the node\'s right child', () => {
-
+          bst.delete('camel');
+          expect(bst.lookup('camel')).toBe(undefined);
+          
+          expect(bst._root.key).toBe('dragonfly');
         });
 
         it('can remove a node with both children, where the successor is not the node\'s right child', () => {
-
+          bst.delete('beetle');
+          expect(bst._root.left.key).toBe('alpaca');
         });
       });
     });
