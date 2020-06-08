@@ -131,7 +131,7 @@ class RedBlackTree {
             currentNode.left = node;
             this._count += 1;
 
-            return currentNode;
+            return node;
           } else {
             currentNode  = currentNode.left;
 
@@ -143,14 +143,14 @@ class RedBlackTree {
             currentNode.right = node;
             this._count += 1;
 
-            return currentNode;
+            return node;
           } else {
             currentNode = currentNode.right;
           }
         } 
         else {
           currentNode.value  = value;
-          return currentNode;
+          return node;
         } 
       } 
     }
@@ -158,11 +158,57 @@ class RedBlackTree {
   }
 
   _insertRebalance(node) {
+    let uncle;
+    while (node.color === RBTNode.RED && node.parent.color === RBTNode.RED) {
+      let parent = node.parent;
+      let grandparent = parent.parent;
+      if (grandparent.left.key === parent.key) {
+        uncle = grandparent.right; 
+
+        if (uncle.color === RBTNode.RED) {
+          uncle.color = RBTNode.BLACK;
+          parent.color = RBTNode.BLACK;
+          grandparent.color = RBTNode.RED;
+          node = grandparent;
+        } else {
+          if (parent.right.key === node.key) {
+            parent = node;
+            node = node.parent;
+            this._rotateLeft(node);
+          } else {
+            parent.color = RBTNode.BLACK;
+            grandparent.color = RBTNode.RED;
+            this._rotateRight(grandparent);
+          }
+        }
+
+      } else {
+        uncle = grandparent.left;
+
+        if (uncle.color === RBTNode.RED) {
+          uncle.color = RBTNode.BLACK;
+          parent.color = RBTNode.BLACK;
+          grandparent.color = RBTNode.RED;
+          node = grandparent;
+        } else {
+          if (parent.left.key === node.key) {
+            parent = node;
+            node = node.parent;
+            this._rotateRight(node);
+          } else {
+            parent.color = RBTNode.BLACK;
+            grandparent.color = RBTNode.RED;
+            this._rotateLeft(grandparent);
+          }
+        }
+      }
+    }
   }
 
   insert(key, value) {
     const node = this._insertInternal(key, value);
     this._insertRebalance(node);
+    this._root.color = RBTNode.BLACK;
   }
 
   delete(key) {
