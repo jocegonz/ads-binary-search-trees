@@ -23,10 +23,22 @@ export class RBTNode {
 class RedBlackTree {
   constructor(Node = RBTNode) {
     this.Node = Node;
+    this._count = 0;
+    this._root = undefined;
   }
 
   lookup(key) {
+    let node = this._root;
 
+    while (node) {
+      if (key < node.key) {
+        node = node.left;
+      } else if (key > node.key) {
+        node = node.right;
+      } else { // equal
+        return node.value;
+      }
+    }
   }
 
   /**
@@ -102,7 +114,47 @@ class RedBlackTree {
     node.parent = child;
   }
 
-  _insertInternal(key, value) {
+  _insertInternal(key, value = true) {
+    let node = new this.Node({key, value});
+    if (this._count === 0) {
+      // node.parent = undefined;
+      this._root = node;
+      this._count += 1;
+      return node;
+    } else {
+      let currentNode  = this._root;
+      
+      while (currentNode) {
+        if (key < currentNode.key) {
+          if (currentNode.left === RBTNode.sentinel) {
+            node.parent = currentNode;
+            currentNode.left = node;
+            this._count += 1;
+
+            return currentNode;
+          } else {
+            currentNode  = currentNode.left;
+
+          }
+          
+        } else if (key > currentNode.key) {
+          if (currentNode.right === RBTNode.sentinel) {
+            node.parent = currentNode;
+            currentNode.right = node;
+            this._count += 1;
+
+            return currentNode;
+          } else {
+            currentNode = currentNode.right;
+          }
+        } 
+        else {
+          currentNode.value  = value;
+          return currentNode;
+        } 
+      } 
+    }
+
   }
 
   _insertRebalance(node) {
@@ -118,7 +170,7 @@ class RedBlackTree {
   }
 
   count() {
-
+    return this._count;
   }
 
   forEach(callback) {
