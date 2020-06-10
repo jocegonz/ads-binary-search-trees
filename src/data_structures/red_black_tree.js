@@ -221,6 +221,7 @@ class RedBlackTree {
 
   forEach(callback) {
     const visitSubtree = (node, callback, i = 0) => {
+      if (!node) return;
       if (node.key) {
         i = visitSubtree(node.left, callback, i);
         callback({ key: node.key, value: node.value }, i, this);
@@ -228,6 +229,7 @@ class RedBlackTree {
       }
       return i;
     }
+    
     visitSubtree(this._root, callback)
   }
 }
