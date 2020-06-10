@@ -220,7 +220,16 @@ class RedBlackTree {
   }
 
   forEach(callback) {
-    
+    const visitSubtree = (node, callback, i = 0) => {
+      console.log(`@@callback `, node, callback)
+      if (node) {
+        i = visitSubtree(node.left, callback, i);
+        callback({ key: node.key, value: node.value }, i, this);
+        i = visitSubtree(node.right, callback, i + 1);
+      }
+      return i;
+    }
+    visitSubtree(this._root, callback)
   }
 }
 
